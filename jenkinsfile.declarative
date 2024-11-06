@@ -1,0 +1,47 @@
+pipeline { 
+    agent { label 'agent1' }
+    stages {   
+        stage('Checkout') { 
+ 	 	 	steps { 
+ 	 	 	 	git branch: 'main', url: 'https://github.com/jyotikaradigudda1996/java-example.git' 
+ 	 	 	} 
+ 	 	} 
+ 
+        stage('Test') {   
+            steps { 
+ 	 	 	 	echo 'Running unit test and integration test' 
+ 	 	 	} 
+ 	 	} 
+ 
+ 	 	stage('Build') { 
+ 	 	 	steps { 
+ 	 	 	 	sh 'mvn clean package' 
+ 	 	 	} 
+ 	 	} 
+ 
+        stage('Push') {    
+            steps { 
+ 	 	 	 	echo 'Pusing artifact to artifactory' 
+ 	 	 	} 
+ 	 	} 
+ 	 	stage('deploy'){
+ 	 	    steps { 
+ 	 	 	    sh 'sudo cp /home/ubuntu/jenkins/workspace/deploy-tomcat/target/*.war /home/ubuntu/tomcat/webapps/'
+ 	 	 	    echo 'Successfully deployed'
+ 	 	    }
+ 	 	}
+	}
+ 	 
+ 	post { 
+         
+ 	 	always { 	     
+ 	 	 	 	 
+            emailext body: ''' jobname :  '$JOB_NAME' build no:  '$BUILD_NUMBER' job URL: '$BUILD_URL' build status: '$BUILD_STATUS' 
+ 
+             ''', subject: '$JOB_NAME' , from: 'jenkins@example.com', to: 'newjsk2024@gmail.com ' 
+ 	 	 	 
+ 	 	 	 
+ 	 	 	 
+ 	 	 	} 
+ 	 	}
+    }
