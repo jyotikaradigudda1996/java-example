@@ -32,16 +32,6 @@ pipeline {
  	 	}
 	}
  	 
- 	post { 
-         
- 	 	always { 	     
- 	 	 	 	 
-            emailext body: ''' jobname :  '$JOB_NAME' build no:  '$BUILD_NUMBER' job URL: '$BUILD_URL' build status: '$BUILD_STATUS' 
- 
-             ''', subject: '$JOB_NAME' , from: 'jenkins@example.com', to: 'newjsk2024@gmail.com ' 
+ 	
  	 	 	 
- 	 	 	 
- 	 	 	 
- 	 	 	} 
- 	 	}
-    }
+ 	 	 	  
