@@ -9,9 +9,9 @@ pipeline {
  
         stage('Test') {   
             steps { 
- 	 	 	 	echo 'Running unit test and integration test' 
- 	 	 	} 
- 	 	} 
+ 	 	 echo 'Running unit test and integration test' 
+ 	 	 } 
+ 	  } 
  
  	 	stage('Build') { 
  	 	 	steps { 
