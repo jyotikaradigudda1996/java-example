@@ -26,7 +26,7 @@ pipeline {
  	 	} 
  	 	stage('deploy'){
  	 	    steps { 
- 	 	 	    sh 'sudo cp /home/ubuntu/jenkins/workspace/deploy-tomcat/target/*.war /home/ubuntu/tomcat/webapps/'
+ 	 	 	    sh 'sudo cp /home/ubuntu/jenkins/workspace/jenkinsfile.declarative/target/*.war /home/ubuntu/tomcat/webapps/'
  	 	 	    echo 'Successfully deployed'
  	 	    }
  	 	}
