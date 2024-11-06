@@ -1,34 +1,29 @@
-pipeline { 
-    agent { label 'agent1' }
-    stages {   
+node('agent1'){
+	
         stage('Checkout') { 
- 	 	 	steps { 
- 	 	 	 	git branch: 'main', url: 'https://github.com/jyotikaradigudda1996/java-example.git' 
- 	 	 	} 
- 	 	} 
- 
+		checkout([
+			$class: 'GitSCM',
+			branches: [[name: 'main']],
+			userRemoteConfigs: [[
+			    credentialsId: 'github',
+			    url: 'https://github.com/jyotikaradigudda1996/java-example.git'
+			]]
+		])
+	}			
+ 	 	 	 
         stage('Test') {   
-            steps { 
- 	 	 	 	echo 'Running unit test and integration test' 
- 	 	 	} 
+              echo 'Running unit test and integration test' 
+	}
  	 	} 
  
  	 	stage('Build') { 
- 	 	 	steps { 
- 	 	 	 	sh 'mvn clean package' 
+ 	 	 	sh 'mvn clean package' 
  	 	 	} 
- 	 	} 
- 
-        stage('Push') {    
-            steps { 
- 	 	 	 	echo 'Pusing artifact to artifactory' 
- 	 	 	} 
- 	 	} 
+
  	 	stage('deploy'){
- 	 	    steps { 
- 	 	 	    sh 'sudo cp /home/ubuntu/jenkins/workspace/deploy-tomcat/target/*.war /home/ubuntu/tomcat/webapps/'
- 	 	 	    echo 'Successfully deployed'
- 	 	    }
+ 	 	     sh 'sudo cp /home/ubuntu/jenkins/workspace/deploy-tomcat/target/*.war /home/ubuntu/tomcat/webapps/'
+ 	 	     echo 'Successfully deployed'
+ 	 	    
  	 	}
 	}
  	 
