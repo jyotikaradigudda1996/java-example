@@ -1,0 +1,103 @@
+pipeline { 
+     agent none  
+	 parameters { 
+ 	 	 	string defaultValue: 'Jenkins', name: 'env_var1'  	 	 	
+			choice choices: ['Dev', 'Test', 'Prod'], name: 'env_var2'  	 	 	
+			booleanParam defaultValue: true, name: 'env_var3' 
+} 
+ 
+    triggers{ 
+ 	 	 	cron '30 * * * *'  	 	 	
+			pollSCM '30 * * * *' 
+ 	 	} 
+ 	 	 
+ 	environment { 
+ 	AWS_ACCESS_KEY=credentials('aws_access_key') 
+ 	GITHUB_CRED=credentials('github_new') 
+        MY_STRING = "${params.env_var1}" 
+        MY_CHOICE = "${params.env_var2}" 
+        MY_BOOLEAN = "${params.env_var3}" 
+    }     
+	stages { 
+         
+        stage('checkout') { 
+            agent{label 'java'} 
+ 	 	 	when{  	 	
+			anyOf{  	 	 	 	 	 	
+			branch 'main'  	 	 	 	 	 	
+			branch 'stage' 
+ 	 	 	 	} 
+ 	 	 	} 
+            steps { 
+                    git branch: 'main', url: 'https://github.com/jyotikaradigudda1996/java-example.git' 
+                    } 
+                }         
+				stage('Test') { 
+    agent{label 'java'}                     
+	steps { 
+                
+ 	 	 	 	echo 'Running unit test and integration test'  	 	 	 	 	 	
+				echo "Environment Variable MY_STRING: 
+${MY_STRING}" 
+ 	 	 	 	 	 	echo "Environment Variable MY_CHOICE: 
+${MY_CHOICE}" 
+ 	 	 	 	 	 	echo "Environment Variable MY_BOOLEAN: 
+${MY_BOOLEAN}" 
+                    } 
+                } 
+            
+        stage('Build') {             
+		agent {label 'agent2'}              
+		when {  
+                     
+                    expression {  
+ 	 	 	 	(currentBuild.result == null || currentBuild.result == 'SUCCESS')  
+ 	 	 
+                 
+            } 
+             	}  		
+ 	 	 
+                         	 	steps { 	
+ 	 	 	 	 	 	// Using Global Variables 
+ 	 	 	 	 	 	echo "jobname :  '$JOB_NAME'" 
+ 	 	 	 	 	 	echo "build no:  '$BUILD_NUMBER'" 
+ 	 	 	 	 	 	echo "job URL: '$BUILD_URL'" 
+ 	 	 
+                    } 
+                } 	 	 	 	
+				echo "Jenkins URL: '$JENKINS_URL'" 
+ 	 	 	 	 	
+            stage('Push') { 		
+ 	 	 	 	agent{label 'agent2'} 
+ 	 	 	 
+                expression {  	
+				when { 
+ 	 	 	 	(currentBuild.result == null || currentBuild.result == 'SUCCESS')  
+ 	 	}  
+            } 
+                    steps { 
+                        echo 'Pusing artifact to artifactory' 
+ 	 	 	sh 'echo $AWS_ACCESS_KEY' 	 	 	 
+ 	 	 	sh 'echo USERNAME:PASSWORD:: $GITHUB_CRED'  	 	 	
+			sh 'echo username: $GITHUB_CRED_USR' 
+ 	 	 	sh 'echo password: $GITHUB_CRED_PSW' 
+                    } 
+                } 
+             
+    } 
+     
+ 	 
+ 	post { 
+         
+ 	 	always { 	     
+ 	 	 	 	 
+   emailext body: '''    jobname :  '$JOB_NAME' 
+            build no:  '$BUILD_NUMBER'             
+			job URL: '$BUILD_URL'             
+			build status: '$BUILD_STATUS' 
+ 
+             ''', subject: '$JOB_NAME' , from: 'jenkins@example.com', to: 'newjsk2024@gmail.com' 
+ 
+ 	 	 	} 
+ 	 	} 
+ 	} 
