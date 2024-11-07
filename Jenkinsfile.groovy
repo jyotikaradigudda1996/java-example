@@ -25,6 +25,4 @@ node('agent1'){
  	 	     echo 'Successfully deployed'
  	 	    
  	 	}
-	}
-}
 }
