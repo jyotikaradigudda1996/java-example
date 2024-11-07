@@ -36,7 +36,7 @@ pipeline {
     agent{label 'java'}                     
 	steps { 
                 
- 	 	 	 	echo 'Running unit test and integration test'  	 	 	 	 	 	
+ 	 	 	 	echo "Running unit test and integration test'  	 	 	 	 	 	
 				echo "Environment Variable MY_STRING: 
 ${MY_STRING}" 
  	 	 	 	 	 	echo "Environment Variable MY_CHOICE: 
