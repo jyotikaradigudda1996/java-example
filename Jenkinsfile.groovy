@@ -21,9 +21,10 @@ node('agent1'){
  	 	 	} 
 
  	 	stage('deploy'){
- 	 	     sh 'sudo cp /home/ubuntu/jenkins/workspace/jenkins.declarative/target/*.war /home/ubuntu/tomcat/webapps/'
+ 	 	     sh 'sudo cp /home/ubuntu/jenkins/workspace/jenkinsfile.groovy/target/*.war /home/ubuntu/tomcat/webapps/'
  	 	     echo 'Successfully deployed'
  	 	    
  	 	}
 	}
-}	 
+}
+}
