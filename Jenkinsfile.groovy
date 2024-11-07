@@ -13,8 +13,7 @@ node('agent1'){
  	 	 	 
         stage('Test') {   
               echo 'Running unit test and integration test' 
-	}
- 	 	} 
+	      }
  
  	 	stage('Build') { 
  	 	 	sh 'mvn clean package' 
@@ -25,4 +24,4 @@ node('agent1'){
  	 	     echo 'Successfully deployed'
  	 	    
  	 	}
-}
+	}
