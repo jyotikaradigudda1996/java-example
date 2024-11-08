@@ -70,12 +70,11 @@ pipeline {
  	 	 	 	 	
                stage('Push') { 		
  	 	  agent {label 'agent2'} 
- 	 	 	 
-                expression {  	
-				when { 
- 	 	 	 	(currentBuild.result == null || currentBuild.result == 'SUCCESS')  
- 	 	}  
-            } 
+                       when { 
+ 	 	 	  expression {  	
+			   (currentBuild.result == null || currentBuild.result == 'SUCCESS')  
+ 	             } 
+                } 
                     steps { 
                         echo 'Pushing artifact to artifactory' 
  	 	 	sh 'echo $AWS_ACCESS_KEY' 	 	 	 
@@ -84,6 +83,7 @@ pipeline {
  	 	 	sh 'echo password: $GITHUB_CRED_PSW' 
                     } 
                 } 
+            }
              
  	post { 
          
@@ -96,4 +96,3 @@ pipeline {
  	 	 	} 
  	 	} 
  	} 
-}
