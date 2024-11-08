@@ -87,9 +87,9 @@ pipeline {
              
  	post {
  always {
-    mail body: "Build Successful the Job: '${env.JOB_NAME}' build number Build #:'${env.BUILD_NUMBER}'\ncheck the details by clicking the link Job URL:'${env.BUILD_URL}'"
+    mail body: "Build Successful the Job: '${JOB_NAME}' build number Build #:'${BUILD_NUMBER}'\ncheck the details by clicking the link Job URL:'${BUILD_URL}'"
             subject: 'pipeline success'
- to: 'newjsk2024@gmail.com''
+ to: 'newjsk2024@gmail.com'
  	 	 	} 
  	 	} 
  	} 
