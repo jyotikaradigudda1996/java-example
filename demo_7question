@@ -59,13 +59,13 @@ pipeline {
  	 	 
                          	 	steps { 	
  	 	 	 	 	 	// Using Global Variables 
- 	 	 	 	 	 	echo "jobname :  '$JOB_NAME'" 
- 	 	 	 	 	 	echo "build no:  '$BUILD_NUMBER'" 
+ 	 	 	 	 	 	echo "jobname : '$JOB_NAME'" 
+ 	 	 	 	 	 	echo "build no: '$BUILD_NUMBER'" 
  	 	 	 	 	 	echo "job URL: '$BUILD_URL'" 
  	 	 
                     } 
                 } 	 	 	 	
-				echo "Jenkins URL: '$JENKINS_URL'" 
+				echo "Jenkins URL: $JENKINS_URL" 
  	 	 	 	 	
             stage('Push') { 		
  	 	 	 	agent{label 'agent2'} 
