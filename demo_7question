@@ -68,8 +68,8 @@ pipeline {
                 } 	 	 	 	
 				 
  	 	 	 	 	
-            stage('Push') { 		
- 	 	 	 	agent{label 'agent2'} 
+               stage('Push') { 		
+ 	 	  agent {label 'agent2'} 
  	 	 	 
                 expression {  	
 				when { 
@@ -85,9 +85,6 @@ pipeline {
                     } 
                 } 
              
-    } 
-     
- 	 
  	post { 
          
  	 	always { 	     
