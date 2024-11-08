@@ -13,7 +13,7 @@ pipeline {
  	 	 
  	environment { 
  	AWS_ACCESS_KEY=credentials('aws_access_key') 
- 	GITHUB_CRED=credentials('github_new') 
+ 	GITHUB_CRED=credentials('tomcat_webapp') 
         MY_STRING = "${params.env_var1}" 
         MY_CHOICE = "${params.env_var2}" 
         MY_BOOLEAN = "${params.env_var3}" 
