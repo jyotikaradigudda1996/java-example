@@ -37,12 +37,12 @@ pipeline {
 	steps { 
                 
  	 	 	 	echo "Running unit test and integration test" 	 	 	 	 	 	
-				echo "Environment Variable MY_STRING"
-${MY_STRING}" 
- 	 	 	 	 	 	echo "Environment Variable MY_CHOICE"
-${MY_CHOICE}" 
- 	 	 	 	 	 	echo "Environment Variable MY_BOOLEAN"
-${MY_BOOLEAN}" 
+				echo "Environment Variable MY_STRING: ${MY_STRING}"
+                    
+ 	 	 	 	echo "Environment Variable MY_CHOICE : ${MY_CHOICE}"
+                    
+ 	 	 	 	echo "Environment Variable MY_BOOLEAN : ${MY_BOOLEAN}"
+                    
                     } 
                 } 
             
@@ -76,7 +76,7 @@ ${MY_BOOLEAN}"
  	 	}  
             } 
                     steps { 
-                        echo 'Pusing artifact to artifactory' 
+                        echo 'Pushing artifact to artifactory' 
  	 	 	sh 'echo $AWS_ACCESS_KEY' 	 	 	 
  	 	 	sh 'echo USERNAME:PASSWORD:: $GITHUB_CRED'  	 	 	
 			sh 'echo username: $GITHUB_CRED_USR' 
