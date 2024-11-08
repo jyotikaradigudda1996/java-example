@@ -65,7 +65,7 @@ pipeline {
  	 	 
                     } 
                 } 	 	 	 	
-				echo "Jenkins URL: $JENKINS_URL" 
+				echo "Jenkins URL: '$JENKINS_URL'" 
  	 	 	 	 	
             stage('Push') { 		
  	 	 	 	agent{label 'agent2'} 
