@@ -87,9 +87,9 @@ pipeline {
              
  	post {
  always {
-    mail body: "Build Successful the Job: '${JOB_NAME}' build number Build #:'${BUILD_NUMBER}'\ncheck the details by clicking the link Job URL:'${BUILD_URL}'"
-            subject: 'pipeline success'
- to: 'newjsk2024@gmail.com'
+        emailext body: ''' jobname : '$JOB_NAME' build no: '$BUILD_NUMBER'  job URL: '$BUILD_URL'  build status: '$BUILD_STATUS' 
+ 
+             ''', subject: '$JOB_NAME' , from: 'jenkins@example.com', to: 'newjsk2024@gmail.com'
  	 	 	} 
  	 	} 
  	} 
