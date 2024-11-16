@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    environment {
+        SONARQUBE_SERVER = 'SonarQube_Server_Name'
+        ARTIFACTORY_CREDENTIALS = credentials('JFrog_Credentials_ID')
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Code Quality Analysis') {
+            steps {
+                withSonarQubeEnv(SONARQUBE_SERVER) {
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=Your_Project_Key -Dsonar.host.url=${env.SONAR_HOST_URL}'
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+        stage('Publish to JFrog Artifactory') {
+            steps {
+                script {
+                    def server = Artifactory.server('Artifactory_Server_Name')
+                    def uploadSpec = """{
+                        "files": [
+                            {
+                                "pattern": "target/*.jar",
+                                "target": "your-repo-path/"
+                            }
+                        ]
+                    }"""
+                    server.upload(uploadSpec)
+                }
+            }
+        }
+    }
+    post {
+        success {
+            // Optionally add notifications or clean-up tasks
+        }
+        failure {
+            // Optionally handle failure-specific tasks
+        }
+    }
+}
